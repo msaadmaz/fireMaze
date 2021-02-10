@@ -39,12 +39,15 @@ def neighborcheck (arr, x, y):
             a+=1
     return a
 #Creates a maze
-def maze():
-    arr = np.zeros((5,5))
+def maze(dim, prob):
+    if (prob < 0) or (prob > 1):
+        raise Exception("Probability must be 0<p<1")
+    arr = np.zeros((dim,dim))
     for x in range(len(arr)):
         for y in range(len(arr[x])):
-            if random.uniform(0,1) < 0.3 and ((x,y)!= (0,0) or (x,y) != (4,4)):
-                arr[x,y] = 1
+            r = random.uniform(0,1)
+            if (r< prob) and (x!=0 and y!=0) and (x!=dim-1 and y!= dim-1):
+                    arr[x,y] = 1
     print(arr)
     return arr
 # Creates a maze with fire increasing every step
@@ -71,7 +74,13 @@ def startFire(arr):
     arr2[x,y] = 2
     print(arr2)
     return arr2
+
 if __name__ == '__main__':
-    arr = maze()
-    arr2 = startFire(arr)
-    arr3 = fireMaze(arr2)
+    dim = input("Enter Maze Dimensions:")
+    print("Dimensions set to: " + dim)
+    p = input("Enter Probability:")
+    print("Proability is: " + p)
+
+    arr = maze(int(dim), np.double(p))
+    #arr2 = startFire(arr)
+   # arr3 = fireMaze(arr2)
