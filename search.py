@@ -8,21 +8,25 @@ def check_neighbors(maze, current_state, fringe, prev, closed_set):
     (x, y) = current_state
 
     # Checks Top Neighboring cell, and adds to
-    if x - 1 >= 0 and maze[x - 1, y] != 1 and (x - 1, y) not in closed_set:
-        fringe.append((x - 1, y))
-        prev[(x - 1, y)] = current_state
+    if x - 1 >= 0 and maze[x - 1, y] != 1:
+        if (x - 1, y) not in closed_set:
+            fringe.append((x - 1, y))
+            prev[(x - 1, y)] = current_state
     # Checks right Neighboring cell, and adds to
-    if y + 1 < len(maze) and maze[x, y + 1] != 1 and (x, y + 1) not in closed_set:
-        fringe.append((x, y + 1))
-        prev[(x, y + 1)] = current_state
+    if y + 1 < len(maze) and maze[x, y + 1] != 1:
+        if (x, y + 1) not in closed_set:
+            fringe.append((x, y + 1))
+            prev[(x, y + 1)] = current_state
     # Checks left Neighboring cell, and adds to
-    if y - 1 >= 0 and maze[x, y - 1] != 1 and (x, y - 1) not in closed_set:
-        fringe.append((x, y - 1))
-        prev[(x, y - 1)] = current_state
+    if y - 1 >= 0 and maze[x, y - 1] != 1:
+        if (x, y - 1) not in closed_set:
+            fringe.append((x, y - 1))
+            prev[(x, y - 1)] = current_state
     # Checks bottom Neighboring cell, and adds to
-    if x + 1 < len(maze) and maze[x + 1, y] != 1 and (x + 1, y) not in closed_set:
-        fringe.append((x + 1, y))
-        prev[((x + 1), y)] = current_state
+    if x + 1 < len(maze) and maze[x + 1, y] != 1:
+        if (x + 1, y) not in closed_set:
+            fringe.append((x + 1, y))
+            prev[((x + 1), y)] = current_state
 
 
 # method to implement DFS, just checks to see if the maze is solvable
@@ -43,6 +47,8 @@ def dfs(maze, start_state, goal_state):
 
         # LIFO stack
         current_state = fringe.pop()
+        if current_state in closed_set:
+            continue
         if current_state == goal_state:
             return True
         # check all the neighbors of current_state and add those to the fringe that are valid
@@ -70,6 +76,8 @@ def bfs(maze, start_state, goal_state):
 
         # FIFO list
         current_state = fringe.pop(0)
+        if current_state in closed_set:
+            continue
         if current_state == goal_state:
             # get the path that leads to the goal state
             final_path = get_path(prev, start_state, goal_state)
@@ -102,6 +110,8 @@ def a_star(maze, start_state, goal_state):
 
         # priority queue
         (priority, (step, current_state)) = fringe.get()
+        if current_state in closed_set:
+            continue
         if current_state == goal_state:
             # get the path that leads to the goal state
             final_path = get_path(prev, start_state, goal_state)
