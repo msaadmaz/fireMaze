@@ -1,5 +1,6 @@
 from queue import PriorityQueue
 import numpy as np
+from collections import deque
 
 
 # method to check the neighbors of a state within the maze
@@ -60,8 +61,8 @@ def dfs(maze, start_state, goal_state):
 
 # method to implement BFS, checks if the maze is solvable and if it is it will write that path into the maze
 def bfs(maze, start_state, goal_state):
-    # queue fringe of tuples implemented with a list
-    fringe = []
+    # queue fringe of tuples
+    fringe = deque()
 
     # dictionary of tuples that have been checked
     closed_set = set()
@@ -74,10 +75,11 @@ def bfs(maze, start_state, goal_state):
 
     while fringe:
 
-        # FIFO list
-        current_state = fringe.pop(0)
+        # FIFO
+        current_state = fringe.popleft()
         if current_state in closed_set:
             continue
+        closed_set.add(current_state)
         if current_state == goal_state:
             # get the path that leads to the goal state
             final_path = get_path(prev, start_state, goal_state)
@@ -86,7 +88,6 @@ def bfs(maze, start_state, goal_state):
             return True
         # check all the neighbors of current_state and add those to the fringe that are valid
         check_neighbors(maze, current_state, fringe, prev, closed_set)
-        closed_set.add(current_state)
 
     return False
 
@@ -112,6 +113,7 @@ def a_star(maze, start_state, goal_state):
         (priority, (step, current_state)) = fringe.get()
         if current_state in closed_set:
             continue
+        closed_set.add(current_state)
         if current_state == goal_state:
             # get the path that leads to the goal state
             final_path = get_path(prev, start_state, goal_state)
@@ -120,7 +122,6 @@ def a_star(maze, start_state, goal_state):
             return True
         # check all the neighbors of current_state and add those to the fringe that are valid
         check_neighbors_heuristic(maze, current_state, fringe, prev, closed_set, step, goal_state)
-        closed_set.add(current_state)
 
     return False
 
