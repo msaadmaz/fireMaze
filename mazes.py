@@ -39,13 +39,13 @@ def create_maze(dim, prob):
 
 
 # Creates a maze with fire increasing every step
-def advance_fire_one_step(maze):
+def advance_fire_one_step(maze, q):
     copy = maze.copy()
     for x in range(len(copy)):
         for y in range(len(copy[x])):
             if copy[x, y] == 0:
                 k = neighbor_check(copy, x, y)
-                prob = 1 - pow((1 - 0.5), k)
+                prob = 1 - ((1 - q)**k)
                 if random.uniform(0, 1) < prob:
                     copy[x, y] = 2
 
@@ -54,11 +54,11 @@ def advance_fire_one_step(maze):
 
 def start_fire(maze):
     copy = maze.copy()
-    x = random.randint(4)
-    y = random.randint(4)
+    x = random.randint(len(maze))
+    y = random.randint(len(maze))
     while copy[x, y] != 0:
-        x = random.randint(4)
-        y = random.randint(4)
+        x = random.randint(len(maze))
+        y = random.randint(len(maze))
     copy[x, y] = 2
 
     return copy

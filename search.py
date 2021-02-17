@@ -152,6 +152,8 @@ def trace_path(path, maze):
         (x, y) = pair
         if maze[x, y] == 1:
             raise Exception("You are going through an obstacle")
+        if maze[x, y] == 2:
+            continue
         # set the path with a 3
         maze[x, y] = 3
 
