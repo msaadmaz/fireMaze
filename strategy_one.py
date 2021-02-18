@@ -1,7 +1,7 @@
-import numpy as np
+# Strategy one calculates the path to the fire without regard to the fire,
+# while traversing the shortest path it can still catch on fire as the fire advances each step the agent takes
+# towards the goal.
 from collections import deque
-
-import image
 import mazes
 import search
 
@@ -44,6 +44,7 @@ def trace_path_with_fire(maze, path, q):
     for pair in path:
         # tuple unpacking to get coordinates
         (x, y) = pair
+        print(pair)
         if maze[x, y] == 1:
             raise Exception("You are going through an obstacle")
         if maze[x, y] == 2:

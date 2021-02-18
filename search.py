@@ -8,23 +8,23 @@ def check_neighbors(maze, current_state, fringe, prev, closed_set):
     # unpacks tuple
     (x, y) = current_state
 
-    # Checks Top Neighboring cell, and adds to
-    if x - 1 >= 0 and maze[x - 1, y] != 1:
+    # Checks Top Neighboring cell, and adds to fringe if not fire or obstacle
+    if x - 1 >= 0 and maze[x - 1, y] != 1 and maze[x - 1, y] != 2:
         if (x - 1, y) not in closed_set:
             fringe.append((x - 1, y))
             prev[(x - 1, y)] = current_state
-    # Checks right Neighboring cell, and adds to
-    if y + 1 < len(maze) and maze[x, y + 1] != 1:
+    # Checks right Neighboring cell, and adds to fringe if not fire or obstacle
+    if y + 1 < len(maze) and maze[x, y + 1] != 1 and maze[x, y + 1] != 2:
         if (x, y + 1) not in closed_set:
             fringe.append((x, y + 1))
             prev[(x, y + 1)] = current_state
-    # Checks left Neighboring cell, and adds to
-    if y - 1 >= 0 and maze[x, y - 1] != 1:
+    # Checks left Neighboring cell, and adds to fringe if not fire or obstacle
+    if y - 1 >= 0 and maze[x, y - 1] != 1 and maze[x, y - 1] != 2:
         if (x, y - 1) not in closed_set:
             fringe.append((x, y - 1))
             prev[(x, y - 1)] = current_state
-    # Checks bottom Neighboring cell, and adds to
-    if x + 1 < len(maze) and maze[x + 1, y] != 1:
+    # Checks bottom Neighboring cell, and adds to fringe if not fire or obstacle
+    if x + 1 < len(maze) and maze[x + 1, y] != 1 and maze[x + 1, y] != 2:
         if (x + 1, y) not in closed_set:
             fringe.append((x + 1, y))
             prev[((x + 1), y)] = current_state

@@ -57,6 +57,8 @@ def start_fire(maze):
     x = random.randint(len(maze))
     y = random.randint(len(maze))
     while copy[x, y] != 0:
+        if (x, y) == (0, 0) or (x, y) == (len(maze) - 1, len(maze) - 1):
+            continue
         x = random.randint(len(maze))
         y = random.randint(len(maze))
     copy[x, y] = 2
