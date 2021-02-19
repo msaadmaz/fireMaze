@@ -4,8 +4,8 @@ import mazes
 import search
 import image
 import matplotlib.pyplot as plt
-#def strat_3:
-
+def strat_3:
+    maze
 
 def test_dfs(dim):
     x = 0.1
@@ -68,28 +68,18 @@ if __name__ == '__main__':
 
     # program body ends
 
-    test_dfs()
-    test_bfs_a_star()
+    #test_dfs(10)
+    #test_bfs_a_star(10)
 
-   # maze = mazes.maze(4100, 0.3) # Maximum dimension size for Hassaan is 3,923,339
-    #start_state = (0, 0)
-   # goal_state = (len(maze)-1, len(maze)-1)
-    #result = search.bfs(maze, start_state, goal_state)
-    #if result:
-   #    image.show_maze(maze)
-    #print(result)
-
-
-
+    maze = mazes.maze(1800, 0.3) # Maximum dimension size for Hassaan is 3,923,339
+    start_state = (0, 0)
+    goal_state = (len(maze)-1, len(maze)-1)
+    result = search.a_star(maze, start_state, goal_state)
+    if result:
+       image.show_maze(maze)
+    print(result)
 
     # end time
     end = time.time()
     # total time taken
     print(f"Runtime of the program is {end - start}")
-    #maze = mazes.maze(10, 0.1) # Maximum dimension size for Hassaan is 3,923,339
-    #start_state = (0, 0)
-   # goal_state = (len(maze)-1, len(maze)-1)
-   # result = search.a_star(maze, start_state, goal_state)
-   # if result:
-   #     image.show_maze(maze)
-    #print(result)
