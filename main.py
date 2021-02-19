@@ -4,10 +4,9 @@ import mazes
 import search
 import strategy_one
 import strategy_two
+import strategy_three
 import image
 import matplotlib.pyplot as plt
-def strat_3:
-    maze
 
 def test_dfs(dim):
     x = 0.1
@@ -15,7 +14,7 @@ def test_dfs(dim):
     xpoints = np.array([])
     while x<1:
         for i in range(50):
-            maze = mazes.maze(dim, x)
+            maze = mazes.create_maze(dim, x)
             s= (0, 0)
             g = (len(maze) - 1, len(maze) - 1)
             result = search.dfs(maze, s, g)
@@ -42,7 +41,7 @@ def test_bfs_a_star(dim):
     y1points = np.array([])
     while x<1:
         for i in range(50):
-            maze = mazes.maze(dim, x)
+            maze = mazes.create_maze(dim, x)
             s= (0, 0)
             g = (len(maze) - 1, len(maze) - 1)
             result = search.bfs(maze, s, g)
@@ -65,23 +64,5 @@ def test_bfs_a_star(dim):
     plt.show()
 
 if __name__ == '__main__':
-    # starting time
-    start = time.time()
-
-    # program body ends
-
-    #test_dfs(10)
-    #test_bfs_a_star(10)
-
-    maze = mazes.maze(1800, 0.3) # Maximum dimension size for Hassaan is 3,923,339
-    start_state = (0, 0)
-    goal_state = (len(maze)-1, len(maze)-1)
-    result = search.a_star(maze, start_state, goal_state)
-    if result:
-       image.show_maze(maze)
-    print(result)
-
-    # end time
-    end = time.time()
-    # total time taken
-    print(f"Runtime of the program is {end - start}")
+    test_dfs(1000)
+    test_bfs_a_star(1000)

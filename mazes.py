@@ -48,7 +48,6 @@ def advance_fire_one_step(maze, q):
                 prob = 1 - ((1 - q)**k)
                 if random.uniform(0, 1) < prob:
                     copy[x, y] = 2
-
     return copy
 
 
@@ -64,14 +63,3 @@ def start_fire(maze):
     copy[x, y] = 2
 
     return copy
-
-
-# if __name__ == '__main__':
-#     dim = input("Enter Maze Dimensions:")
-#     print("Dimensions set to: " + dim)
-#     p = input("Enter Probability:")
-#     print("Proability is: " + p)
-#
-#     arr = maze(int(dim), np.double(p))
-#     # arr2 = startFire(arr)
-# # arr3 = fireMaze(arr2)
