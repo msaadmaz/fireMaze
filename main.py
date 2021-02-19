@@ -2,6 +2,8 @@ import time
 import numpy as np
 import mazes
 import search
+import strategy_one
+import strategy_two
 import image
 import matplotlib.pyplot as plt
 def strat_3:

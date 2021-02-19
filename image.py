@@ -6,7 +6,7 @@ import numpy as np
 # method to show maze in the form of an image for easier visualization
 def show_maze(maze):
     # make color map of fixed colors
-    cmap = colors.ListedColormap(['forestgreen', 'tab:brown', 'orange', 'goldenrod'])
+    cmap = colors.ListedColormap(['white', 'black', 'tab:red', 'goldenrod'])
     bounds = [0, 1, 2, 3, 4]
     norm = colors.BoundaryNorm(bounds, cmap.N)
 
