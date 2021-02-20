@@ -6,7 +6,7 @@ import mazes
 import search
 
 
-def strat_one(maze, start_state, goal_state, q):
+def strategy_one(maze, start_state, goal_state, q):
     # queue fringe of tuples
     fringe = deque()
 
@@ -18,9 +18,6 @@ def strat_one(maze, start_state, goal_state, q):
 
     # first item in queue is the start
     fringe.append(start_state)
-
-    # start the fire in the maze
-    maze = mazes.start_fire(maze)
 
     while fringe:
 

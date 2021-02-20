@@ -1,8 +1,10 @@
 import numpy as np
 from numpy import random
 
+import image
+import search
 
-# Checks if neighbors of a given cell are on fire
+
 def neighbor_check(maze, x, y):
     a = 0
 
@@ -38,6 +40,30 @@ def create_maze(dim, prob):
     return arr
 
 
+# Creates a valid fire maze
+def create_fire_maze(dim, prob):
+    maze = create_maze(dim, prob)
+
+    # initialize the fire and obtain the coordinates to that fire
+    fire_location = start_fire(maze)
+
+    # check to see if there is a path from start to fire, and if not keep checking until there is a valid path
+    there_is_path_to_fire = search.dfs(maze, (0, 0), fire_location)
+    # set the maze on fire
+    maze[fire_location] = 2
+    # check to see if the maze is solvable from start to goal, and if not keep checking until there is a valid path
+    maze_is_solvable = search.dfs(maze, (0, 0), (dim - 1, dim - 1))
+    while not there_is_path_to_fire or not maze_is_solvable:
+        maze = create_maze(dim, prob)
+        fire_location = start_fire(maze)
+        there_is_path_to_fire = search.dfs(maze, (0, 0), fire_location)
+        # set the maze on fire
+        maze[fire_location] = 2
+        maze_is_solvable = search.dfs(maze, (0, 0), (dim - 1, dim - 1))
+    # return the maze
+    return maze
+
+
 # Creates a maze with fire increasing every step
 def advance_fire_one_step(maze, q):
     copy = maze.copy()
@@ -45,7 +71,7 @@ def advance_fire_one_step(maze, q):
         for y in range(len(copy[x])):
             if copy[x, y] == 0:
                 k = neighbor_check(copy, x, y)
-                prob = 1 - ((1 - q)**k)
+                prob = 1 - ((1 - q) ** k)
                 if random.uniform(0, 1) < prob:
                     copy[x, y] = 2
 
@@ -61,10 +87,8 @@ def start_fire(maze):
             continue
         x = random.randint(len(maze))
         y = random.randint(len(maze))
-    copy[x, y] = 2
 
-    return copy
-
+    return x, y
 
 # if __name__ == '__main__':
 #     dim = input("Enter Maze Dimensions:")
