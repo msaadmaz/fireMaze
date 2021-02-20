@@ -5,4 +5,7 @@ import strategy_one
 import strategy_two
 import image
 import testPlots
-if __name__ == '__main__':
+import graphs
+
+# This file was used to test our code
+graphs.test_fire_maze_strategies(10)

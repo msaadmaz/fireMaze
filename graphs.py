@@ -19,8 +19,6 @@ def test_dfs(dim):
             result = search.dfs(maze, s, g)
             if result:
                 prob_counter += 1
-            #
-            # image.show_maze(maze)
         prob_counter = prob_counter / 50
         xpoints = np.append(xpoints, [prob_counter])
         prob_counter = 0
@@ -77,27 +75,39 @@ def test_fire_maze_strategies(dim):
     y3 = np.array([])
     while x < 1:
         for i in range(50):
-            maze = mazes.create_maze(dim, 0.3)
+            fire_maze = mazes.create_fire_maze(dim, 0.3)
             s = (0, 0)
-            g = (len(maze) - 1, len(maze) - 1)
-            if strategy_one.strat_one(maze, s, g, x)[1]:
+            g = (len(fire_maze) - 1, len(fire_maze) - 1)
+            if strategy_one.strategy_one(fire_maze, s, g, x)[1]:
                 c1 += 1
-            #if strategy_two.strat_two(maze, s, g, x)[1]:
-            #    c2 += 1
-            if strategy_three.strat_three(maze, s, g, x)[1]:
+            if strategy_two.strategy_two(fire_maze, s, g, x):
+                c2 += 1
+            if strategy_three.strat_three(fire_maze, s, g, x)[1]:
                 c3 += 1
         c1 = c1 / 50
         y1 = np.append(y1, [c1])
-        #c2 = c2 / 50
-        #y2 = np.append(y2, [c2])
+        c2 = c2 / 50
+        y2 = np.append(y2, [c2])
         c3 = c3 / 50
         y3 = np.append(y3, [c3])
         x += 0.1
-
-    plt.plot(x1, y1, label = "strat 1")
-   # plt.plot(x2, y2, label = "strat 2")
-    plt.plot(x3, y3, label = "strat 3")
-    plt.ylabel("Average Success ")
+    # Generate only Strat 1 Graph
+    plt.plot(x1, y1)
+    plt.title("Strategy 1 Success Rate vs Flammability q")
+    plt.ylabel("Average Success")
+    plt.xlabel("Flammability q")
+    plt.show()
+    # Generate only Strat 2 Graph
+    plt.plot(x2, y2)
+    plt.title("Strategy 2 Success Rate vs Flammability q")
+    plt.ylabel("Average Success")
+    plt.xlabel("Flammability q")
+    plt.show()
+    # Generate Graph of strat 1,2, and 3
+    plt.plot(x1, y1, label="strat 1")
+    plt.plot(x2, y2, label="strat 2")
+    plt.plot(x3, y3, label="strat 3")
+    plt.ylabel("Average Success")
     plt.xlabel("Flammability q")
     plt.legend()
     plt.title("Strategy 1 vs Strategy 2 vs FFFF")

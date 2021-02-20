@@ -4,6 +4,7 @@ from numpy import random
 import image
 import search
 
+
 # Checks if neighbors of a given cell are on fire
 def neighbor_check(maze, x, y):
     a = 0
@@ -86,7 +87,6 @@ def start_fire(maze):
             continue
         x = random.randint(len(maze))
         y = random.randint(len(maze))
-
     return x, y
 
 # if __name__ == '__main__':

@@ -169,6 +169,7 @@ def trace_path(path, maze):
         maze[x, y] = 3
     return True
 
+
 # method to check the neighbors of a state within the maze
 def check_neighbors_heuristic(maze, current_state, fringe, prev, closed_set, step, goal_state):
     # unpacks tuple
