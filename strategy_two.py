@@ -2,62 +2,38 @@
 # After taking it's first step on that final path the fire is advanced one step, then the BFS algorithm is called again.
 # This recall of BFS for each step till the agent makes the goal is to make sure it can avoid the fire as much as
 # possible on the way to the goal.
+import image
 import mazes
 import search
-from collections import deque
 
 
-def trace_path_and_advance_fire(maze, path, q, start_state, goal_state):
-    for pair in path:
-        # tuple unpacking to get coordinates
-        (x, y) = pair
-        if maze[x, y] == 1:
-            raise Exception("You are going through an obstacle")
-        if maze[x, y] == 2:
-            return maze, False
-        # set the path with a 3
-        maze[x, y] = 3
-        # advance the fire
+def strategy_two(maze, start_state, goal_state, q):
+    # initialize a final path to fill into the maze
+    final_path = []
+
+    # a pointer to keep track of the state
+    current_state = start_state
+
+    while current_state != goal_state:
+
+        # add the current cell into the final path
+        final_path.append(current_state)
+
+        # advance the fire one step, as one step was taken in the maze
         maze = mazes.advance_fire_one_step(maze, q)
-        if pair == start_state:
-            continue
-        if pair == goal_state:
-            return maze, True
-        print(pair)
-        # call upon bfs again to make sure we are avoiding the fire as much as possible
-        strat_two(maze, pair, (len(maze) - 1, len(maze) - 1), q)
 
-    return maze, True
+        (result, nodes_visited, current_path) = search.a_star(maze, current_state, goal_state)
 
+        # the maze is not solvable, the agent ran into the fire
+        if not result:
+            print("The agent has caught on fire :(")
+            return False
 
-def strat_two(maze, start_state, goal_state, q):
+        # go to the next tile in the path, increment the pointer
+        current_state = current_path[1]
 
-    # queue fringe of tuples
-    fringe = deque()
-
-    # dictionary of tuples that have been checked
-    closed_set = set()
-
-    # dictionary of tuples (x,y) coordinates that are the proper path
-    prev = {}
-
-    # first item in queue is the start
-    fringe.append(start_state)
-
-    while fringe:
-
-        # FIFO
-        current_state = fringe.popleft()
-        if current_state in closed_set:
-            continue
-        closed_set.add(current_state)
-        if current_state == goal_state:
-            # get the path that leads to the goal state
-            final_path = search.get_path(prev, start_state, goal_state)
-            print(final_path)
-            # trace the path in the maze, and call upon BFS every time a step is taken and the fire is advanced
-            return trace_path_and_advance_fire(maze, final_path, q, start_state, goal_state)
-        # check all the neighbors of current_state and add those to the fringe that are valid
-        search.check_neighbors(maze, current_state, fringe, prev, closed_set)
-
-    return maze, False
+    # the agent has traversed the path
+    final_path.append(goal_state)
+    search.trace_path(final_path, maze)
+    image.show_maze(maze)
+    return True
