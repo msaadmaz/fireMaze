@@ -162,9 +162,12 @@ def trace_path(path, maze):
         # tuple unpacking to get coordinates
         (x, y) = pair
         if maze[x, y] == 1:
-            raise Exception("You are going through an obstacle")
+            return False
+        if maze[x, y] == 2:
+            return False
         # set the path with a 3
         maze[x, y] = 3
+    return True
 
 
 # method to check the neighbors of a state within the maze

@@ -68,3 +68,5 @@ def trace_path_with_fire(maze, path, q):
         maze = mazes.advance_fire_one_step(maze, q)
 
     return maze, True
+
+#def test_strat_one
