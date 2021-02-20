@@ -7,6 +7,13 @@ import search
 
 # Checks if neighbors of a given cell are on fire
 def neighbor_check(maze, x, y):
+    """
+    Method that checks if a given cells neighbors cells are on fire
+    :param maze: maze where cells will be checked
+    :param x: x coordinate of maze
+    :param y: y coordinate of maze
+    :return: counter for numbers of on fire cells
+    """
     a = 0
 
     # Checks Top Neighboring cell
@@ -30,6 +37,12 @@ def neighbor_check(maze, x, y):
 
 # Creates a maze
 def create_maze(dim, prob):
+    """
+    Method that creates a maze
+    :param dim: dimensions of maze
+    :param prob: probability density
+    :return: a maze with obstacles based on probability p
+    """
     if (prob < 0) or (prob > 1):
         raise Exception("Probability must be 0<p<1")
     arr = np.zeros((dim, dim))
@@ -43,6 +56,12 @@ def create_maze(dim, prob):
 
 # Creates a valid fire maze
 def create_fire_maze(dim, prob):
+    """
+    Method that creates a valid fire maze
+    :param dim: dimensions of maze
+    :param prob: probability density
+    :return: a valid maze that can initially be solved
+    """
     maze = create_maze(dim, prob)
 
     # initialize the fire and obtain the coordinates to that fire
@@ -88,13 +107,3 @@ def start_fire(maze):
         x = random.randint(len(maze))
         y = random.randint(len(maze))
     return x, y
-
-# if __name__ == '__main__':
-#     dim = input("Enter Maze Dimensions:")
-#     print("Dimensions set to: " + dim)
-#     p = input("Enter Probability:")
-#     print("Proability is: " + p)
-#
-#     arr = maze(int(dim), np.double(p))
-#     # arr2 = startFire(arr)
-# # arr3 = fireMaze(arr2)

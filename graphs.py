@@ -8,6 +8,11 @@ import search
 
 
 def test_dfs(dim):
+    """
+    Method to generate graph for DFS
+    :param dim: dimensions of graph
+    :return: void, plots a graph
+    """
     x = 0.1
     prob_counter = 0
     xpoints = np.array([])
@@ -32,6 +37,12 @@ def test_dfs(dim):
 
 
 def test_bfs_a_star(dim):
+    """
+    Method to generate a plot of the average ‘number of nodes explored by BFS -
+    number of nodes explored byA∗’ vs ‘obstacle density p’
+    :param dim: dimensions of maze
+    :return: void, plots results to a graph
+    """
     x = 0.1
     bfs_counter = 0
     a_star_counter = 0
@@ -63,7 +74,14 @@ def test_bfs_a_star(dim):
 
 
 def test_fire_maze_strategies(dim):
+    """
+    Method to Plot,  for  Strategy  1,  2,  and  3,
+    a  graph  of  ‘average  strategy  success  rate’  vs  ‘flammability q’ atp= 0.3
+    :param dim: dimensions of maze
+    :return: void, makes 3 plots and graphs them
+    """
     x = 0.1
+    count = 0
     c1 = 0
     c2 = 0
     c3 = 0

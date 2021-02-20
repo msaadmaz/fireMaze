@@ -8,6 +8,14 @@ import search
 
 
 def strategy_two(maze, start_state, goal_state, q):
+    """
+    Method for Strategy 2 that utilizes A star to locate the next optimal step from each step taken
+    :param maze: The maze we wish to solve
+    :param start_state: Initial tile in maze
+    :param goal_state: Goal tile in maze
+    :param q: Flammability rate
+    :return: The final maze and Whether or not the agent was successful
+    """
     # initialize a final path to fill into the maze
     final_path = []
 
@@ -26,14 +34,14 @@ def strategy_two(maze, start_state, goal_state, q):
 
         # the maze is not solvable, the agent ran into the fire
         if not result:
-            print("The agent has caught on fire :(")
+            # print("The agent has caught on fire :(")
             return False
 
         # go to the next tile in the path, increment the pointer
         current_state = current_path[1]
 
     # the agent has traversed the path
-    final_path.append(goal_state)
-    search.trace_path(final_path, maze)
-    image.show_maze(maze)
+    # final_path.append(goal_state)
+    # search.trace_path(final_path, maze)
+    # image.show_maze(maze)
     return True

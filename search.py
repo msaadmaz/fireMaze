@@ -3,8 +3,16 @@ import numpy as np
 from collections import deque
 
 
-# method to check the neighbors of a state within the maze
 def check_neighbors(maze, current_state, fringe, prev, closed_set):
+    """
+    Method to check the neighbors of a given cell
+    :param maze: maze where we want to check the neighbors
+    :param current_state: the current cell to be checked
+    :param fringe: the fringe to append valid neighbors
+    :param prev: a dictionary of previous current states to obtain a final path
+    :param closed_set: a set of all visited nodes
+    :return: a counter of all the visited nodes
+    """
     # unpacks tuple
     (x, y) = current_state
     count = 0
@@ -35,8 +43,14 @@ def check_neighbors(maze, current_state, fringe, prev, closed_set):
     return count
 
 
-# method to implement DFS, just checks to see if the maze is solvable
 def dfs(maze, start_state, goal_state):
+    """
+    Method to implement DFS, just checks to see if the maze is solvable
+    :param maze: maze to be checked
+    :param start_state: Initial cell
+    :param goal_state: goal tile in maze
+    :return: a boolean if it is solvable or not
+    """
     # stack fringe of tuples implemented with a list
     fringe = []
 
@@ -64,8 +78,14 @@ def dfs(maze, start_state, goal_state):
     return False
 
 
-# method to implement BFS, checks if the maze is solvable and if it is it will write that path into the maze
 def bfs(maze, start_state, goal_state):
+    """
+    Method to implement BFS, checks if the maze is solvable and if it is it will write that path into the maze
+    :param maze: maze to be checked
+    :param start_state: Initial cell
+    :param goal_state: goal tile in maze
+    :return: a boolean if it is solvable or not, and a count of nodes visited
+    """
     # queue fringe of tuples
     fringe = deque()
 
@@ -90,9 +110,9 @@ def bfs(maze, start_state, goal_state):
         closed_set.add(current_state)
         if current_state == goal_state:
             # get the path that leads to the goal state
-            # final_path = get_path(prev, start_state, goal_state)
+            final_path = get_path(prev, start_state, goal_state)
             # trace the path in the maze
-            # trace_path(final_path, maze)
+            trace_path(final_path, maze)
             return True, count
         # check all the neighbors of current_state and add those to the fringe that are valid
         count += check_neighbors(maze, current_state, fringe, prev, closed_set)
@@ -103,6 +123,14 @@ def bfs(maze, start_state, goal_state):
 # method that implements A* and uses the euclidean distance heuristic to prioritize in the queue. If the maze is
 # solvable then it will also write the path into the maze.
 def a_star(maze, start_state, goal_state):
+    """
+    Method that implements A* and uses the euclidean distance heuristic to prioritize in the queue. If the maze is
+    solvable then it will also write the path into the maze.
+    :param maze: maze to be checked
+    :param start_state: Initial cell
+    :param goal_state: goal tile in maze
+    :return: a boolean if it is solvable or not, and a count of nodes visited, and the final discovered path to goal
+    """
     # priority queue fringe of tuples implemented with a list
     fringe = PriorityQueue()
 
@@ -129,7 +157,7 @@ def a_star(maze, start_state, goal_state):
             # get the path that leads to the goal state
             final_path = get_path(prev, start_state, goal_state)
             # trace the path in the maze
-            # trace_path(final_path, maze)
+            trace_path(final_path, maze)
             return True, count, final_path
         # check all the neighbors of current_state and add those to the fringe that are valid
         count += check_neighbors_heuristic(maze, current_state, fringe, prev, closed_set, step, goal_state)
@@ -139,14 +167,26 @@ def a_star(maze, start_state, goal_state):
 
 # method to retrieve euclidean distance
 def get_distance(start_state, goal_state):
+    """
+    Method to retrieve euclidean distance
+    :param start_state: point 1
+    :param goal_state: point 2
+    :return: distance from point 1 to point 2
+    """
     # unpack tuples
     (x, y) = start_state
     (i, j) = goal_state
     return np.sqrt((((i - x) ** 2) + ((j - y) ** 2)))
 
 
-# method to trace prev and get the path that will lead to the goal state
 def get_path(prev, start_state, goal_state):
+    """
+    Method to trace prev and get the path that will lead to the goal state
+    :param prev: list of previous current states from search methods
+    :param start_state: the initial state
+    :param goal_state: goal tile we want to get to
+    :return: path array from start to goal
+    """
     path = [goal_state]
     while path[-1] != start_state:
         path.append(prev[path[-1]])
@@ -158,6 +198,12 @@ def get_path(prev, start_state, goal_state):
 
 # method to trace path within the maze
 def trace_path(path, maze):
+    """
+    Method to trace path within the maze
+    :param path: path array of tuples that holds coordinates of the path
+    :param maze: maze in which we want to put the path into
+    :return: boolean if it was properly added or was caught by an obstacle or fire
+    """
     for pair in path:
         # tuple unpacking to get coordinates
         (x, y) = pair
@@ -172,6 +218,17 @@ def trace_path(path, maze):
 
 # method to check the neighbors of a state within the maze
 def check_neighbors_heuristic(maze, current_state, fringe, prev, closed_set, step, goal_state):
+    """
+    Method to check the neighbors of a state within the maze with the Euclidean Distance Heuristic for A*
+    :param maze: maze where we want to check the neighbors
+    :param current_state: the current cell to be checked
+    :param fringe: the fringe to append valid neighbors
+    :param prev: a dictionary of previous current states to obtain a final pat
+    :param closed_set: a set of all visited nodes
+    :param step: numbers of steps from the initial state
+    :param goal_state: goal tile we are trying to get to
+    :return: count of the number of nodes visited
+    """
     # unpacks tuple
     (x, y) = current_state
 
@@ -210,4 +267,11 @@ def check_neighbors_heuristic(maze, current_state, fringe, prev, closed_set, ste
 
 # gets the total distance from start to current node to goal, this is the priority for the queue
 def get_total_distance(step, neighbor, goal_state):
+    """
+    Method to get the total distance from start to current node to goal, this is the priority for the queue
+    :param step: number of steps from the initial state
+    :param neighbor: the current tile
+    :param goal_state: the goal tile
+    :return: total distance
+    """
     return step + get_distance(neighbor, goal_state)

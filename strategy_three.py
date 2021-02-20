@@ -5,6 +5,12 @@ from numpy import random
 
 
 def advance_fire_one_step_strat_3(maze, q):
+    """
+    Method to advance the fire one step in the maze
+    :param maze: maze which will have the fire advanced
+    :param q: flammability rate
+    :return: a copy of the maze with the fire progressed and a boolean if it was advanced
+    """
     copy = maze.copy()
     counter = 0
     for x in range(len(copy)):
@@ -24,9 +30,16 @@ def advance_fire_one_step_strat_3(maze, q):
 
 
 def strat_three(maze, start_state, goal_state, q):
-    maze = mazes.start_fire(maze)
-    # Test if it
-
+    """
+    Method for Strategy three that uses a previous and current maze to test know future outcomes of the maze and get the
+    most optimal path using A star before all paths to the goal are set on fire. This is essentially making a game tree
+    to understand all future outcomes of the fire and solving before it is unsolvable
+    :param maze: The maze we wish to solve
+    :param start_state: Initial tile in maze
+    :param goal_state: Goal tile in maze
+    :param q: Flammability rate
+    :return: The final maze and Whether or not the agent was successful
+    """
     result = search.dfs(maze, start_state, goal_state)
     if not result:
         return maze, False
@@ -40,13 +53,13 @@ def strat_three(maze, start_state, goal_state, q):
         prev = curr
 
         # Make the current maze point to the advanced fire maze
-        (curr, bool) = advance_fire_one_step_strat_3(curr, q)
-        if bool == False:
+        (curr, result2) = advance_fire_one_step_strat_3(curr, q)
+        if not result2:
             return curr, True
         # Run DFS on the new fire maze
         result = search.dfs(curr, start_state, goal_state)
     # Curr Maze is unsolvable while prev maze should be solvable
-    (result, count) = search.a_star(prev, start_state, goal_state)
-    #print(result)
-    #image.show_maze(curr)
+    (result, count, path) = search.a_star(prev, start_state, goal_state)
+    # print(result)
+    # image.show_maze(prev)
     return prev, result
