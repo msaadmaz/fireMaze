@@ -7,6 +7,16 @@ import search
 
 
 def strategy_one(maze, start_state, goal_state, q):
+    """
+     Method for strategy 1 that uses BFS to find a path to goal then calls upon another method to know if the agent
+     runs into the fire.
+
+     :param maze: The maze we wish to solve
+     :param start_state: Initial tile in maze
+     :param goal_state: Goal tile in maze
+     :param q: Flammability rate
+     :return: The final maze and Whether or not the agent was successful
+     """
     # queue fringe of tuples
     fringe = deque()
 
@@ -38,6 +48,14 @@ def strategy_one(maze, start_state, goal_state, q):
 
 
 def trace_path_with_fire(maze, path, q):
+    """
+    Method that traces path into the fire and advances the fire one step each step the agent takes
+
+    :param maze: The maze we wish to solve
+    :param path: The path from start to goal
+    :param q: Flammability rate
+    :return: The final maze and Whether or not the agent was successful
+    """
     for pair in path:
         # tuple unpacking to get coordinates
         (x, y) = pair
