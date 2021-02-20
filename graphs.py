@@ -100,5 +100,5 @@ def test_fire_maze_strategies(dim):
     plt.ylabel("Average Success ")
     plt.xlabel("Flammability q")
     plt.legend()
-    plt.title("Strategy 1 vs Strategy 2 vs FFF")
+    plt.title("Strategy 1 vs Strategy 2 vs FFFF")
     plt.show()
