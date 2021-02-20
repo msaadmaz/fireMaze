@@ -47,6 +47,6 @@ def strat_three(maze, start_state, goal_state, q):
         result = search.dfs(curr, start_state, goal_state)
     # Curr Maze is unsolvable while prev maze should be solvable
     (result, count) = search.a_star(prev, start_state, goal_state)
-    print(result)
-    image.show_maze(curr)
+    #print(result)
+    #image.show_maze(curr)
     return prev, result
